@@ -1,4 +1,7 @@
 import gotypes
 
-p = gotypes.Player.black
-print(p.other)
+player = gotypes.Player.black
+print(player.other)
+
+point = gotypes.Point(10, 10)
+print(point.neighbors())
