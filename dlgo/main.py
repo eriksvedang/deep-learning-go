@@ -1,18 +1,23 @@
 import gotypes
 import goboard_slow
-import agent.helpers
+import agent
+from utils import print_board, print_move
+import time
 
 def main():
-    player = gotypes.Player.black
-    print(player.other)
-    point = gotypes.Point(10, 10)
-    print(point.neighbors())
-    board = goboard_slow.Board(19, 19)
-    board.place_stone(player, point)
-    board.place_stone(player, gotypes.Point(2, 3))
-    print(board._grid)
-    state = goboard_slow.GameState.new_game(13)
-    print(state.board.num_rows)
+    board_size = 9
+    game = goboard_slow.GameState.new_game(board_size)
+    bots = {
+        gotypes.player.black: agent.naive.RandomBot(),
+        gotypes.player.white: agent.naive.RandomBot(),
+    }
+    while not game.is_over():
+        time.sleep(0.3)
+        print(chr(27) + "[2J")
+        print_board(game.board)
+        bot_move = bots[game.next_player].select_move(game)
+        print_move(game.next_player, bot_move)
+        game = game.apply_move(bot_move)
 
 if __name__ == "__main__":
     main()
