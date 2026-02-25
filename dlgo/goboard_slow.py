@@ -132,7 +132,7 @@ class GameState():
         second_last_move = self.previous_state.last_move
         if second_last_move is None:
             return False
-        return last_move.is_pass and second_last_move.is_pass
+        return self.last_move.is_pass and second_last_move.is_pass
 
     def is_move_self_capture(self, player, move):
         if not move.is_play:
@@ -152,7 +152,7 @@ class GameState():
         next_board = copy.deepcopy(self.board)
         next_board.place_stone(player, move.point)
         next_situation = (player.other, next_board)
-        past_state = next_board.previous_state
+        past_state = self.previous_state
         while past_state is not None:
             if past_state.situation == next_situation:
                 return True
@@ -162,7 +162,7 @@ class GameState():
     def is_valid_move(self, move):
         if self.is_over():
             return False
-        if move.is_pass() or move.is_resign():
+        if move.is_pass or move.is_resign:
             return True
         return (
             self.board.get(move.point) is None and

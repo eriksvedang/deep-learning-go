@@ -1,19 +1,21 @@
 import gotypes
 import goboard_slow
-import agent
+from agent.naive import RandomBot
 from utils import print_board, print_move
 import time
+import os
 
 def main():
     board_size = 9
     game = goboard_slow.GameState.new_game(board_size)
     bots = {
-        gotypes.player.black: agent.naive.RandomBot(),
-        gotypes.player.white: agent.naive.RandomBot(),
+        gotypes.Player.black: RandomBot(),
+        gotypes.Player.white: RandomBot(),
     }
     while not game.is_over():
         time.sleep(0.3)
-        print(chr(27) + "[2J")
+        #print(chr(27) + "[2J")
+        os.system('clear')
         print_board(game.board)
         bot_move = bots[game.next_player].select_move(game)
         print_move(game.next_player, bot_move)
