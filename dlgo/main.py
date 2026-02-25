@@ -10,6 +10,8 @@ def main():
     board.place_stone(player, point)
     board.place_stone(player, gotypes.Point(2, 3))
     print(board._grid)
+    state = goboard_slow.GameState.new_game(13)
+    print(state.board.num_rows)
 
 if __name__ == "__main__":
     main()
