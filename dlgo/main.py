@@ -1,5 +1,6 @@
 import gotypes
 import goboard_slow
+import agent.helpers
 
 def main():
     player = gotypes.Player.black
