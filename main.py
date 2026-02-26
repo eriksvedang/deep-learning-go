@@ -7,16 +7,18 @@ import time
 import os
 
 def play_vs():
-    board_size = 3
+    board_size = 9
     game = GameState.new_game(board_size)
     players = {
-        dlgo.gotypes.Player.black: MinMaxBot(),
+        dlgo.gotypes.Player.black: RandomBot(),
         dlgo.gotypes.Player.white: RandomBot(),
     }
     while not game.is_over():
-        time.sleep(0.5)
-        os.system('clear')
+        #time.sleep(0.1)
+        #os.system('clear')
         print_board(game.board)
+        print('Black captures: %d' % game.board.black_captures)
+        print('White captures: %d' % game.board.white_captures)
         print('')
         player = players[game.next_player]
         if player is None:
@@ -27,6 +29,8 @@ def play_vs():
             move = player.select_move(game)
         print_move(game.next_player, move)
         game = game.apply_move(move)
+    result = dlgo.scoring.compute_game_result(game)
+    print("Winner: %s (margin %i)" % (result.winner, result.winning_margin))
 
 def main():
     play_vs()

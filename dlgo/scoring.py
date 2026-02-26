@@ -3,14 +3,14 @@ from collections import namedtuple
 from dlgo.gotypes import Player, Point
 
 class Territory:
-    def __init__(self, territory_map):  # <1>
+    def __init__(self, territory_map):
         self.num_black_territory = 0
         self.num_white_territory = 0
         self.num_black_stones = 0
         self.num_white_stones = 0
         self.num_dame = 0
         self.dame_points = []
-        for point, status in territory_map.items():  # <2>
+        for point, status in territory_map.items():
             if status == Player.black:
                 self.num_black_stones += 1
             elif status == Player.white:
@@ -49,24 +49,23 @@ counted as territory; it makes no attempt to identify even
 trivially dead groups.
 """
 def evaluate_territory(board):
-
     status = {}
     for r in range(1, board.num_rows + 1):
         for c in range(1, board.num_cols + 1):
             p = Point(row=r, col=c)
-            if p in status:  # <1>
+            if p in status:
                 continue
             stone = board.get(p)
-            if stone is not None:  # <2>
+            if stone is not None:
                 status[p] = board.get(p)
             else:
                 group, neighbors = _collect_region(p, board)
-                if len(neighbors) == 1:  # <3>
+                if len(neighbors) == 1:
                     neighbor_stone = neighbors.pop()
                     stone_str = 'b' if neighbor_stone == Player.black else 'w'
                     fill_with = 'territory_' + stone_str
                 else:
-                    fill_with = 'dame'  # <4>
+                    fill_with = 'dame'
                 for pos in group:
                     status[pos] = fill_with
     return Territory(status)
@@ -105,4 +104,4 @@ def compute_game_result(game_state):
     return GameResult(
         territory.num_black_territory + territory.num_black_stones,
         territory.num_white_territory + territory.num_white_stones,
-        komi=7.5)
+        komi=0)

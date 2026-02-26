@@ -59,6 +59,8 @@ class Board():
         self.num_cols = num_cols
         self._grid = {} # A map of GoStrings
         self._hash = zobrist.EMPTY_BOARD
+        self.black_captures = 0
+        self.white_captures = 0
 
     def place_stone(self, player, point):
         assert self.is_on_grid(point)
@@ -109,6 +111,10 @@ class Board():
                     self._replace_string(neighbor_string.with_liberty(point))
             self._grid[point] = None
             self._hash ^= zobrist.HASH_CODE[point, string.color]
+            if string.color == Player.black:
+                self.white_captures += 1
+            else:
+                self.black_captures += 1
 
     def zobrist_hash(self):
         return self._hash
