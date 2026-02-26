@@ -7,7 +7,7 @@ import time
 import os
 
 def play_vs():
-    board_size = 9
+    board_size = 4
     game = GameState.new_game(board_size)
     players = {
         dlgo.gotypes.Player.black: RandomBot(),
@@ -19,6 +19,7 @@ def play_vs():
         print_board(game.board)
         print('Black captures: %d' % game.board.black_captures)
         print('White captures: %d' % game.board.white_captures)
+        print('Diff: %d' % game.capture_diff())
         print('')
         player = players[game.next_player]
         if player is None:

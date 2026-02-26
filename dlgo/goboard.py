@@ -113,7 +113,7 @@ class Board():
             self._hash ^= zobrist.HASH_CODE[point, string.color]
             if string.color == Player.black:
                 self.white_captures += 1
-            else:
+            elif string.color == Player.white:
                 self.black_captures += 1
 
     def zobrist_hash(self):
@@ -223,3 +223,20 @@ class GameState():
             return self.next_player
         game_result = compute_game_result(self)
         return game_result.winner
+
+    def capture_diff(self):
+        black_stones = 0
+        white_stones = 0
+        for r in range(1, self.board.num_rows + 1):
+            for c in range(1, self.board.num_cols + 1):
+                p = Point(r, c)
+                color = self.board.get(p)
+                if color == Player.black:
+                    black_stones += 1
+                elif color == Player.white:
+                    white_stones += 1
+        diff = black_stones - white_stones
+        if self.next_player == Player.black:
+            return diff
+        else:
+            return diff * -1
