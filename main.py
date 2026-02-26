@@ -1,7 +1,7 @@
 import dlgo.gotypes
 from dlgo.goboard import GameState
 from dlgo.agent.naive import RandomBot
-from dlgo.agent.minmax import MinMaxBot
+from dlgo.minmax.minmax import MinMaxBot
 from dlgo.utils import print_board, print_move, point_from_coords
 import time
 import os
