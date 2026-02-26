@@ -5,57 +5,43 @@ from dlgo.agent.helpers import is_point_an_eye
 from dlgo.goboard import Move
 from dlgo.gotypes import Point
 
-class GameResult(enum.Enum):
-    loss = 1
-    draw = 2
-    win = 3
-
 class MinMaxBot(Agent):
     def select_move(self, game_state):
-        winning_moves = []
-        draw_moves = []
-        losing_moves = []
+        best_moves = []
+        best_score = MIN_SCORE
 
         for possible_move in game_state.legal_moves():
             next_state = game_state.apply_move(possible_move)
-            opponent_best_outcome = best_result(next_state)
-            our_best_outcome = reverse_game_result(opponent_best_outcome)
-            if our_best_outcome == GameResult.win:
-                winning_moves.append(possible_move)
-            elif our_best_outcome == GameResult.draw:
-                draw_moves.append(possible_move)
-            else:
-                losing_moves.append(possible_move)
+            opponent_best_outcome = best_result(next_state, max_depth=4)
+            our_best_outcome = -1 * opponent_best_outcome
+            print('Possible move %s (%s) has best outcome %d' % (possible_move, game_state.next_player, our_best_outcome))
+            if (not best_moves) or our_best_outcome > best_score:
+                best_moves = [possible_move]
+                best_score = our_best_outcome
+            elif our_best_outcome == best_score:
+                best_moves.append(possible_move)
 
-        if winning_moves:
-            return random.choice(winning_moves)
-        elif draw_moves:
-            return random.choice(draw_moves)
-        else:
-            return random.choice(losing_moves)
+        #print("Best moves: %s" % ", ".join(map(lambda m: str(m), best_moves)))
+        return random.choice(best_moves)
 
-def best_result(game_state):
+MAX_SCORE = 99999
+MIN_SCORE = -99999
+
+def best_result(game_state, max_depth):
     if game_state.is_over():
         if game_state.winner() == game_state.next_player:
-            return GameResult.win
-        elif game_state.winner() is None:
-            return GameResult.draw
+            return MAX_SCORE
         else:
-            return GameResult.loss
+            return MIN_SCORE
 
-    best_result_so_far = GameResult.loss
+    if max_depth == 0:
+        return game_state.capture_diff()
+
+    best_so_far = MIN_SCORE
     for candidate_move in game_state.legal_moves():
         next_state = game_state.apply_move(candidate_move)
-        opponent_best_result = best_result(next_state)
-        our_result = reverse_game_result(opponent_best_result)
-        if our_result.value > best_result_so_far.value:
-            best_result_so_far = our_result
-    return best_result_so_far
-
-def reverse_game_result(result):
-    if result == GameResult.win:
-        return GameResult.loss
-    elif result == GameResult.loss:
-        return GameResult.win
-    else:
-        return GameResult.draw
+        opponent_best = best_result(next_state, max_depth - 1)
+        our_result = -1 * opponent_best
+        if our_result > best_so_far:
+            best_so_far = our_result
+    return best_so_far

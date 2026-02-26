@@ -24,6 +24,14 @@ class Move():
     def resign(cls):
         return Move(is_resign=True)
 
+    def __str__(self):
+        if self.is_play:
+            return 'Play at %s' % str(self.point)
+        elif self.is_pass:
+            return "Pass"
+        else:
+            return "Resign"
+
 class GoString():
     def __init__(self, color, stones, liberties):
         self.color = color
@@ -213,7 +221,7 @@ class GameState():
                 if self.is_valid_move(move):
                     moves.append(move)
         moves.append(Move.pass_turn())
-        moves.append(Move.resign())
+        #moves.append(Move.resign())
         return moves
 
     def winner(self):
