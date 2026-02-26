@@ -1,6 +1,8 @@
 import copy
-from dlgo.gotypes import Player
+from dlgo.gotypes import Player, Point
 from dlgo import zobrist
+from dlgo.agent.helpers import is_point_an_eye
+from dlgo.scoring import compute_game_result
 
 class Move():
     def __init__(self, point=None, is_pass=False, is_resign=False):
@@ -196,3 +198,22 @@ class GameState():
             board_size = (board_size, board_size)
         board = Board(*board_size)
         return GameState(board, Player.black, None, None)
+
+    def legal_moves(self):
+        moves = []
+        for r in range(1, self.board.num_rows + 1):
+            for c in range(1, self.board.num_cols + 1):
+                move = Move.play(Point(row=r, col=c))
+                if self.is_valid_move(move):
+                    moves.append(move)
+        moves.append(Move.pass_turn())
+        moves.append(Move.resign())
+        return moves
+
+    def winner(self):
+        if not self.is_over():
+            return None
+        if self.last_move.is_resign:
+            return self.next_player
+        game_result = compute_game_result(self)
+        return game_result.winner

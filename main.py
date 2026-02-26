@@ -1,15 +1,16 @@
 import dlgo.gotypes
 from dlgo.goboard import GameState
 from dlgo.agent.naive import RandomBot
+from dlgo.agent.minmax import MinMaxBot
 from dlgo.utils import print_board, print_move, point_from_coords
 import time
 import os
 
 def play_vs():
-    board_size = 5
+    board_size = 3
     game = GameState.new_game(board_size)
     players = {
-        dlgo.gotypes.Player.black: RandomBot(),
+        dlgo.gotypes.Player.black: MinMaxBot(),
         dlgo.gotypes.Player.white: RandomBot(),
     }
     while not game.is_over():
