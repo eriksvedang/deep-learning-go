@@ -12,7 +12,7 @@ class MinMaxBot(Agent):
 
         for possible_move in game_state.legal_moves():
             next_state = game_state.apply_move(possible_move)
-            opponent_best_outcome = best_result(next_state, max_depth=4)
+            opponent_best_outcome = best_result(next_state, max_depth=3)
             our_best_outcome = -1 * opponent_best_outcome
             print('Possible move %s (%s) has best outcome %d' % (possible_move, game_state.next_player, our_best_outcome))
             if (not best_moves) or our_best_outcome > best_score:
@@ -21,7 +21,6 @@ class MinMaxBot(Agent):
             elif our_best_outcome == best_score:
                 best_moves.append(possible_move)
 
-        #print("Best moves: %s" % ", ".join(map(lambda m: str(m), best_moves)))
         return random.choice(best_moves)
 
 MAX_SCORE = 99999
@@ -35,7 +34,7 @@ def best_result(game_state, max_depth):
             return MIN_SCORE
 
     if max_depth == 0:
-        return game_state.capture_diff()
+        return game_state.capture_diff() + game_state.liberties_diff()
 
     best_so_far = MIN_SCORE
     for candidate_move in game_state.legal_moves():

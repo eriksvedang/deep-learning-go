@@ -61,6 +61,9 @@ class GoString():
             self.stones == other.stones and \
             self.liberties == other.liberties
 
+    def __hash__(self):
+        return hash((self.color, self.stones, self.liberties))
+
 class Board():
     def __init__(self, num_rows, num_cols):
         self.num_rows = num_rows
@@ -244,6 +247,26 @@ class GameState():
                 elif color == Player.white:
                     white_stones += 1
         diff = black_stones - white_stones
+        if self.next_player == Player.black:
+            return diff
+        else:
+            return diff * -1
+
+    def liberties_diff(self):
+        black_libs = 0
+        white_libs = 0
+        counted_strings = set([])
+        for k, s in self.board._grid.items():
+            if s in counted_strings:
+                continue
+            if s is None:
+                continue
+            if s.color == Player.black:
+                black_libs += len(s.liberties)
+            elif s.color == Player.white:
+                white_libs += len(s.liberties)
+            counted_strings.add(s)
+        diff = black_libs - white_libs
         if self.next_player == Player.black:
             return diff
         else:

@@ -7,7 +7,7 @@ import time
 import os
 
 def play_vs():
-    board_size = 4
+    board_size = 5
     game = GameState.new_game(board_size)
     players = {
         dlgo.gotypes.Player.black: MinMaxBot(), # RandomBot(),
