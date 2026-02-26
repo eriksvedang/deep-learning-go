@@ -13,10 +13,11 @@ def bot_vs_bot():
         dlgo.gotypes.Player.white: RandomBot(),
     }
     while not game.is_over():
-        time.sleep(0.3)
+        #time.sleep(0.2)
         #print(chr(27) + "[2J")
-        os.system('clear')
+        #os.system('clear')
         print_board(game.board)
+        print('')
         bot_move = bots[game.next_player].select_move(game)
         print_move(game.next_player, bot_move)
         game = game.apply_move(bot_move)

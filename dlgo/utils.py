@@ -3,8 +3,8 @@ import dlgo.gotypes
 COLS = 'ABCDEFHJKLMNOPQRST'
 STONE_TO_CHAR = {
     None: '🟨',
-    dlgo.gotypes.Player.black: '⚪',
-    dlgo.gotypes.Player.white: '⚫',
+    dlgo.gotypes.Player.black: '⚫',
+    dlgo.gotypes.Player.white: '⚪',
 }
 
 def print_move(player, move):
