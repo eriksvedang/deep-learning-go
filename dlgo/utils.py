@@ -1,6 +1,6 @@
 import dlgo.gotypes
 
-COLS = 'ABCDEFHJKLMNOPQRST'
+COLS = 'ABCDEFHJKLMNOPQRSTU'
 STONE_TO_CHAR = {
     None: '🟨',
     dlgo.gotypes.Player.black: '⚫',

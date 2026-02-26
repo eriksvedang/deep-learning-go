@@ -6,7 +6,7 @@ import time
 import os
 
 def bot_vs_bot():
-    board_size = 9
+    board_size = 19
     game = dlgo.goboard_slow.GameState.new_game(board_size)
     bots = {
         dlgo.gotypes.Player.black: RandomBot(),
