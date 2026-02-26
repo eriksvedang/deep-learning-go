@@ -6,14 +6,14 @@ import time
 import os
 
 def play_vs():
-    board_size = 19
+    board_size = 5
     game = GameState.new_game(board_size)
     players = {
         dlgo.gotypes.Player.black: RandomBot(),
         dlgo.gotypes.Player.white: RandomBot(),
     }
     while not game.is_over():
-        time.sleep(0.0)
+        time.sleep(0.5)
         os.system('clear')
         print_board(game.board)
         print('')
