@@ -30,7 +30,7 @@ print("__all__ = ['HASH_CODE', 'EMPTY_BOARD']")
 print('')
 print('HASH_CODE = {')
 for (pt, state) , hash_code in table.items():
-    print('    (%r, %s): %r' % (pt, to_python(state), hash_code))
+    print('    (%r, %s): %r,' % (pt, to_python(state), hash_code))
 print('}')
 print('')
 print('EMPTY_BOARD = %d' % (empty_board,))

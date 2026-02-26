@@ -1,13 +1,13 @@
 import dlgo.gotypes
-import dlgo.goboard_slow
+from dlgo.goboard import GameState
 from dlgo.agent.naive import RandomBot
-from dlgo.utils import print_board, print_move
+from dlgo.print_utils import print_board, print_move
 import time
 import os
 
 def bot_vs_bot():
     board_size = 19
-    game = dlgo.goboard_slow.GameState.new_game(board_size)
+    game = GameState.new_game(board_size)
     bots = {
         dlgo.gotypes.Player.black: RandomBot(),
         dlgo.gotypes.Player.white: RandomBot(),
@@ -15,7 +15,7 @@ def bot_vs_bot():
     while not game.is_over():
         #time.sleep(0.2)
         #print(chr(27) + "[2J")
-        #os.system('clear')
+        os.system('clear')
         print_board(game.board)
         print('')
         bot_move = bots[game.next_player].select_move(game)
