@@ -12,8 +12,8 @@ def play_vs():
     board_size = 7
     game = GameState.new_game(board_size)
     players = {
-        Player.black: MCTSAgent(500, 1.5),
-        Player.white: MCTSAgent(500, 1.5),
+        Player.black: MCTSAgent(50, 1.5),
+        Player.white: MCTSAgent(50, 1.5),
     }
     while not game.is_over():
         #time.sleep(0.1)

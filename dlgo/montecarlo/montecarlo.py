@@ -78,7 +78,7 @@ class MCTSAgent(Agent):
             if child_pct > best_pct:
                 best_pct = child_pct
                 best_move = child.move
-        print('Select move %s with win pct %.3f' % (best_move, best_pct))
+        print('Select move %s with win percentage %.3f' % (best_move, best_pct))
         return best_move
 
     def select_child(self, node):
