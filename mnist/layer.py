@@ -48,5 +48,9 @@ class Layer:
     def update_params(self, learning_rate):
         pass
 
+    # Print the properties of this layer
     def describe(self):
         raise NotImplementedError
+
+    def sigmoid_prime_double(x):
+        return sigmoid_double(x) * (1 - sigmoid_double(x))
