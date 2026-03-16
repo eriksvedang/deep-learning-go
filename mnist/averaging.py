@@ -52,5 +52,18 @@ def predict(x, W, b):
     return sigmoid_double(np.dot(W, x) + b)
 
 b = -45
-print(predict(x_3, W, b))
-print(predict(x_18, W, b))
+#print(predict(x_3, W, b))
+#print(predict(x_18, W, b))
+
+def evaluate(data, digit, threshold, W, b):
+    total_samples = 1.0 * len(data)
+    correct_predictions = 0
+    for x in data:
+        if predict(x[0], W, b) > threshold and np.argmax(x[1]) == digit:
+            correct_predictions += 1
+        elif predict(x[0], W, b) <= threshold and np.argmax(x[1]) != digit:
+            correct_predictions += 1
+    return correct_predictions / total_samples
+
+for digit in range(0, 10):
+    print("%d: %f" % (digit, evaluate(data=test, digit=digit, threshold=0.5, W=W, b=b)))
