@@ -1,5 +1,13 @@
 import numpy as np
+from neural.utils import sigmoid
 
+def sigmoid_prime_double(x):
+    return sigmoid_double(x) * (1 - sigmoid_double(x))
+
+def sigmoid_prime(z):
+    return np.vectorize(sigmoid_prime_double)(z)
+
+# Base class for the actual layer types (see below)
 class Layer:
     def __init__(self):
         self.params = []
@@ -51,12 +59,6 @@ class Layer:
     # Print the properties of this layer
     def describe(self):
         raise NotImplementedError
-
-    def sigmoid_prime_double(x):
-        return sigmoid_double(x) * (1 - sigmoid_double(x))
-
-    def sigmoid_prime(z):
-        return np.vectorize(sigmoid_prime_double)(z)
 
 
 
