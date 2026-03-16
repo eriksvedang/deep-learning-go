@@ -16,7 +16,7 @@ def shape_data(data):
     return list(zip(features, labels))
 
 def load_data():
-    with gzip.open('./mnist/mnist.pkl.gz', 'rb') as f:
+    with gzip.open('./neural/mnist.pkl.gz', 'rb') as f:
         train_data, validation_data, test_data = pickle.load(f, encoding='bytes')
         f.close()
     return shape_data(train_data), shape_data(test_data)

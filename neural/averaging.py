@@ -3,13 +3,14 @@ import struct
 import six.moves.cPickle as pickle
 import gzip
 from matplotlib import pyplot as plt
+import utils
 
 def average_digit(data, digit):
     filtered_data = [x[0] for x in data if np.argmax(x[1]) == digit]
     filtered_array = np.asarray(filtered_data)
     return np.average(filtered_array, axis=0)
 
-train, test = neural.utils.load_data()
+train, test = utils.load_data()
 avg_height = average_digit(train, digit=8)
 #show(avg_height)
 
@@ -21,16 +22,16 @@ x_18 = train[17][0] # an 8
 #print(np.dot(W, x_18)) # This one is longer, since it matches the avg_height for the number 8
 
 b = -45
-#print(neural.utils.predict(x_3, W, b))
-#print(neural.utils.predict(x_18, W, b))
+#print(utils.predict(x_3, W, b))
+#print(utils.predict(x_18, W, b))
 
 def evaluate(data, digit, threshold, W, b):
     total_samples = 1.0 * len(data)
     correct_predictions = 0
     for x in data:
-        if neural.predict(x[0], W, b) > threshold and np.argmax(x[1]) == digit:
+        if utils.predict(x[0], W, b) > threshold and np.argmax(x[1]) == digit:
             correct_predictions += 1
-        elif neural.predict(x[0], W, b) <= threshold and np.argmax(x[1]) != digit:
+        elif utils.predict(x[0], W, b) <= threshold and np.argmax(x[1]) != digit:
             correct_predictions += 1
     return correct_predictions / total_samples
 
