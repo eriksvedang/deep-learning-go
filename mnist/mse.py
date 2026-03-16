@@ -1,6 +1,7 @@
 import random
 import numpy as np
 
+# Mean Squared Error
 class MSE:
     def __init__(self):
         pass
