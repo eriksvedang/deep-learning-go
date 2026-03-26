@@ -1,4 +1,5 @@
 from neural.mse import MSE
+import numpy as np
 import random
 
 class SequentialNetwork:
@@ -35,7 +36,7 @@ class SequentialNetwork:
         self.forward_backward(mini_batch)
         self.update(mini_batch, learning_rate)
 
-    def update(self, mini_batch):
+    def update(self, mini_batch, learning_rate):
         learning_rate = learning_rate / len(mini_batch)
         for layer in self.layers:
             layer.update_params(learning_rate)
